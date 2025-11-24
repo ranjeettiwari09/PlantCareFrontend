@@ -5,7 +5,7 @@
 // const BASE_URL = "http://localhost:5000";
 
 // For production (deployed backend)
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://plantcarebackend.onrender.com";
 
 export default BASE_URL;
 
