@@ -6,7 +6,7 @@ import { Send, Users, MessageCircle, Search } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const ChatSection = ({ initialUserEmail = null }) => {
   const { userDetails, token } = useContext(AuthContext);
   const [conversations, setConversations] = useState([]);
@@ -45,7 +45,7 @@ const ChatSection = ({ initialUserEmail = null }) => {
   // Fetch conversations
   const fetchConversations = async () => {
     try {
-      const res = await axios.get(`${baseUrl}/chat/conversations`, {
+      const res = await axios.get(`${BASE_URL}/chat/conversations`, {
         headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
       });
       setConversations(res.data.conversations || []);
@@ -61,7 +61,7 @@ const ChatSection = ({ initialUserEmail = null }) => {
   const fetchAllUsers = async () => {
     try {
       setLoadingUsers(true);
-      const res = await axios.get(`${baseUrl}/chat/users`, {
+      const res = await axios.get(`${BASE_URL}/chat/users`, {
         headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
       });
       setAllUsers(res.data.users || []);
@@ -84,7 +84,7 @@ const ChatSection = ({ initialUserEmail = null }) => {
       // URL encode the email to handle special characters
       const encodedEmail = encodeURIComponent(receiverEmail);
       const res = await axios.get(
-        `${baseUrl}/chat/messages/${encodedEmail}`,
+        `${BASE_URL}/chat/messages/${encodedEmail}`,
         {
           headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
         }
@@ -115,7 +115,7 @@ const ChatSection = ({ initialUserEmail = null }) => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `${baseUrl}/chat/send`,
+        `${BASE_URL}/chat/send`,
         {
           receiverEmail: selectedUser.email,
           message: newMessage.trim(),

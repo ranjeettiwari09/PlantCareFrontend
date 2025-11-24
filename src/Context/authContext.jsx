@@ -2,10 +2,9 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import BASE_URL from "../config/api";
 
 export const AuthContext = createContext();
-
-const baseUrl="https://plantcarebackend.onrender.com"
 export const AuthProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
   const [token, setToken] = useState(null);
@@ -15,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
   const Authenticate = async (token) => {
     try {
-      const res = await axios.get(`${baseUrl}/auth/authenticate`, {
+      const res = await axios.get(`${BASE_URL}/auth/authenticate`, {
         headers: { authorization: `Bearer ${token}` },
       });
       return true;
@@ -31,7 +30,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUserProfile = async (token) => {
     try {
-      const res = await axios.get(`${baseUrl}/auth/getuser`, {
+      const res = await axios.get(`${BASE_URL}/auth/getuser`, {
         headers: { authorization: `Bearer ${token}` },
       });
 

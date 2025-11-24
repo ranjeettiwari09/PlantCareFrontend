@@ -3,7 +3,7 @@ import { AuthContext } from "../../Context/authContext";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const ChatBadge = () => {
   const { userDetails, token, isLogin } = useContext(AuthContext);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -17,7 +17,7 @@ const ChatBadge = () => {
     }
 
     try {
-      const res = await axios.get(`${baseUrl}/chat/conversations`, {
+      const res = await axios.get(`${BASE_URL}/chat/conversations`, {
         headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
       });
       
@@ -35,7 +35,7 @@ const ChatBadge = () => {
   useEffect(() => {
     if (!isLogin || !token) return;
 
-    const s = io(`${baseUrl}`, { transports: ["websocket"] });
+    const s = io(`${BASE_URL}`, { transports: ["websocket"] });
     setSocket(s);
 
     s.on("connect", () => {

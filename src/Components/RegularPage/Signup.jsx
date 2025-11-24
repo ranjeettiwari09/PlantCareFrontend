@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ const Signup = () => {
     }
     try {
       setLoading(true);
-      const res = await axios.post(`${baseUrl}/auth/signup`, {
+      const res = await axios.post(`${BASE_URL}/auth/signup`, {
         email,
         password,
         name,

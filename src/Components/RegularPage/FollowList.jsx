@@ -6,7 +6,7 @@ import axios from "axios";
 import { AuthContext } from "../../Context/authContext";
 
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const FollowList = () => {
   const { type, email } = useParams(); // type = "followers" or "following"
   const { token, userDetails, isLogin } = useContext(AuthContext);
@@ -32,7 +32,7 @@ const FollowList = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${baseUrl}/auth/alluser`);
+      const res = await axios.get(`${BASE_URL}/auth/alluser`);
       const allUsers = res.data.users || [];
 
       // Get the target user to find their followers/following
@@ -69,7 +69,7 @@ const FollowList = () => {
       const statusPromises = users.map(async (user) => {
         try {
           const res = await axios.get(
-            `${baseUrl}/follow/status/${encodeURIComponent(user.email)}`,
+            `${BASE_URL}/follow/status/${encodeURIComponent(user.email)}`,
             { headers: { Authorization: `Bearer ${token}` } }
           );
           return { email: user.email, isFollowing: res.data.isFollowing || false };
@@ -101,7 +101,7 @@ const FollowList = () => {
       const endpoint = isFollowing ? "unfollow" : "follow";
       
       await axios.post(
-        `${baseUrl}/follow/${endpoint}/${encodeURIComponent(userEmail)}`,
+        `${BASE_URL}/follow/${endpoint}/${encodeURIComponent(userEmail)}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

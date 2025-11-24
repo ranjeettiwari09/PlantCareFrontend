@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageCircle, Bell, Leaf, Home, User, LogOut, FileText } from "lucide-react";
+import { Menu, X, MessageCircle, Bell, Leaf, Home, User, LogOut, FileText, TrendingUp } from "lucide-react";
 import { AuthContext } from "../../Context/authContext";
 import NotificationBell from "../RegularPage/NotificationBell";
 import ChatBadge from "../RegularPage/ChatBadge";
@@ -45,6 +45,13 @@ const Navbar = () => {
             </Link>
             {isLogin && (
               <>
+                <Link
+                  to="/tracker"
+                  className="hover:text-green-300 transition-colors duration-200 py-2 px-3 rounded-md hover:bg-green-700 flex items-center gap-1"
+                >
+                  <TrendingUp className="w-4 h-4" />
+                  Tracker
+                </Link>
                 <NotificationBell />
                 <Link
                   to="/chat"
@@ -125,6 +132,13 @@ const Navbar = () => {
                   aria-label="Plant Care Tips"
                 >
                   <Leaf className="w-6 h-6" />
+                </Link>
+                <Link
+                  to="/tracker"
+                  className="p-2 hover:bg-green-700 rounded-lg transition-colors"
+                  aria-label="Tracker"
+                >
+                  <TrendingUp className="w-6 h-6" />
                 </Link>
                 <NotificationBell />
                 <Link
@@ -227,6 +241,14 @@ const Navbar = () => {
 
                   {isLogin ? (
                     <>
+                      <Link
+                        to="/tracker"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors text-gray-700"
+                      >
+                        <TrendingUp className="w-5 h-5 text-green-600" />
+                        <span className="font-medium">Tracker</span>
+                      </Link>
                       <Link
                         to="/chat"
                         onClick={() => setMobileMenuOpen(false)}

@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 
 const PlantCareChatbot = ({ isOpen, onClose, isAlwaysVisible = false }) => {
   const [isMinimized, setIsMinimized] = useState(false);
@@ -51,7 +51,7 @@ const PlantCareChatbot = ({ isOpen, onClose, isAlwaysVisible = false }) => {
 
     try {
       const response = await axios.post(
-        `${baseUrl}/ai/chat`,
+        `${BASE_URL}/ai/chat`,
         {
           message: inputMessage.trim(),
           context: "plant care tips and advice",

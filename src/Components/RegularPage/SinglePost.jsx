@@ -8,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const SinglePost = () => {
   const { id } = useParams();
   const { token, userDetails } = useContext(AuthContext);
@@ -22,13 +22,13 @@ const SinglePost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/posts/${id}`);
+        const res = await axios.get(`${BASE_URL}/posts/${id}`);
         setPost(res.data.post);
         
         // Fetch user details
         if (res.data.post?.email) {
           try {
-            const userRes = await axios.get(`${baseUrl}/auth/alluser`);
+            const userRes = await axios.get(`${BASE_URL}/auth/alluser`);
             const foundUser = userRes.data.users?.find(u => u.email === res.data.post.email);
             setUser(foundUser);
           } catch (err) {
@@ -55,13 +55,13 @@ const SinglePost = () => {
 
     try {
       await axios.put(
-        `${baseUrl}/posts/like/${post._id}`,
+        `${BASE_URL}/posts/like/${post._id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
       // Refresh post
-      const res = await axios.get(`${baseUrl}/posts/${id}`);
+      const res = await axios.get(`${BASE_URL}/posts/${id}`);
       setPost(res.data.post);
     } catch (err) {
       console.error(err);
@@ -79,7 +79,7 @@ const SinglePost = () => {
     try {
       const updatedComments = [...(post.comment || []), commentInput];
       await axios.put(
-        `${baseUrl}/comment/${post._id}`,
+        `${BASE_URL}/comment/${post._id}`,
         { comment: updatedComments },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -101,7 +101,7 @@ const SinglePost = () => {
 
     try {
       await axios.delete(
-        `${baseUrl}/posts/comment/${post._id}/${commentIndex}`,
+        `${BASE_URL}/posts/comment/${post._id}/${commentIndex}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

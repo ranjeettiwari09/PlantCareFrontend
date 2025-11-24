@@ -13,6 +13,9 @@ import UserProfile from "./Components/RegularPage/UserProfile";
 import MyPost from "./Components/RegularPage/MyPost";
 import PlantCareTips from "./Components/RegularPage/PlantCareTips";
 import FollowList from "./Components/RegularPage/FollowList";
+import PlantTracker from "./Components/RegularPage/PlantTracker";
+import AddPlant from "./Components/RegularPage/AddPlant";
+import PlantDetail from "./Components/RegularPage/PlantDetail";
 function App() {
   return (
     <>
@@ -31,6 +34,9 @@ function App() {
           <Route path="/my-post" element={<MyPost />} />
           <Route path="/plant-care-tips" element={<PlantCareTips />} />
           <Route path="/user/:email/:type" element={<FollowList />} />
+          <Route path="/tracker" element={<PlantTracker />} />
+          <Route path="/tracker/add" element={<AddPlant />} />
+          <Route path="/tracker/plant/:id" element={<PlantDetail />} />
 
 
         </Routes>

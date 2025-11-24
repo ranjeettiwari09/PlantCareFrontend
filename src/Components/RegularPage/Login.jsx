@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +25,7 @@ const Login = () => {
   try {
     setLoading(true);
 
-    const res = await axios.post(`${baseUrl}/auth/login`, {
+    const res = await axios.post(`${BASE_URL}/auth/login`, {
       email,
       password,
     });

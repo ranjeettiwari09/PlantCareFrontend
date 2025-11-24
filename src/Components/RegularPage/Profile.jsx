@@ -6,7 +6,7 @@ import axios from "axios";
 import photo from "..//../assets/sddefault.jpg"
 
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const Profile = () => {
   const [user, setUser] = useState({});
   const [name, setName] = useState("");
@@ -35,7 +35,7 @@ const Profile = () => {
         formData.append("profileImage", image);
       }
 
-      await axios.put(`${baseUrl}/auth/update`, formData, {
+      await axios.put(`${BASE_URL}/auth/update`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -55,7 +55,7 @@ const Profile = () => {
       setToken(token);
       try {
         if (token) {
-          const res = await axios.get(`${baseUrl}/auth/getuser`, {
+          const res = await axios.get(`${BASE_URL}/auth/getuser`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           const data = res.data;
@@ -71,7 +71,7 @@ const Profile = () => {
           if (data.email) {
             try {
               const countsRes = await axios.get(
-                `${baseUrl}/follow/counts/${encodeURIComponent(data.email)}`
+                `${BASE_URL}/follow/counts/${encodeURIComponent(data.email)}`
               );
               setFollowingCount(countsRes.data.followingCount || 0);
               setFollowersCount(countsRes.data.followersCount || 0);

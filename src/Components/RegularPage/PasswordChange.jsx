@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../Context/authContext";
+import BASE_URL from "../../config/api";
 
 const PasswordChange = () => {
   const { userDetails } = useContext(AuthContext);
@@ -14,9 +15,6 @@ const PasswordChange = () => {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
-
-
-  const baseUrl="https://plantcarebackend.onrender.com"
   // Generate 6-digit OTP
   const generateCode = () => Math.floor(100000 + Math.random() * 900000);
 
@@ -29,7 +27,7 @@ const PasswordChange = () => {
   // Decrease timer every second
   useEffect(() => {
      const fetchUserProfile=async ()=>{
-       const res=await axios.get(`${baseUrl}/auth/getuser`,{
+       const res=await axios.get(`${BASE_URL}/auth/getuser`,{
          headers: { authorization: `Bearer ${token}` },
        })
 
@@ -73,7 +71,7 @@ const PasswordChange = () => {
 
     try {
       await axios.post(
-        `${baseUrl}/mailer/send-otp`,
+        `${BASE_URL}/mailer/send-otp`,
         {
           email: user.email,
           message: `Your verification code is: ${code}`,
@@ -106,7 +104,7 @@ const PasswordChange = () => {
 
     try {
       await axios.put(
-        `${baseUrl}/auth/change-password`,
+        `${BASE_URL}/auth/change-password`,
         {
           email: userDetails.email,
           newPassword,

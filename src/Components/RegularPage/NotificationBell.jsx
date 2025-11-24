@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const NotificationBell = () => {
   const { userDetails, token, isLogin } = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
@@ -36,13 +36,13 @@ const NotificationBell = () => {
     
     try {
       setLoading(true);
-      const res = await axios.get(`${baseUrl}/notifications/`, {
+      const res = await axios.get(`${BASE_URL}/notifications/`, {
         headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
       });
       setNotifications(res.data.notifications || []);
       
       // Update unread count
-      const unreadRes = await axios.get(`${baseUrl}/notifications/unread-count`, {
+      const unreadRes = await axios.get(`${BASE_URL}/notifications/unread-count`, {
         headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
       });
       setUnreadCount(unreadRes.data.count || 0);
@@ -57,7 +57,7 @@ const NotificationBell = () => {
   useEffect(() => {
     if (!isLogin || !token) return;
 
-    const s = io(`${baseUrl}`, { transports: ["websocket"] });
+    const s = io(`${BASE_URL}`, { transports: ["websocket"] });
     setSocket(s);
 
     s.on("connect", () => {
@@ -118,7 +118,7 @@ const NotificationBell = () => {
   const markAsRead = async (notificationId) => {
     try {
       await axios.put(
-        `${baseUrl}/notifications/read/${notificationId}`,
+        `${BASE_URL}/notifications/read/${notificationId}`,
         {},
         {
           headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
@@ -140,7 +140,7 @@ const NotificationBell = () => {
   const markAllAsRead = async () => {
     try {
       await axios.put(
-        `${baseUrl}/notifications/read-all`,
+        `${BASE_URL}/notifications/read-all`,
         {},
         {
           headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
@@ -160,7 +160,7 @@ const NotificationBell = () => {
   const clearAllNotifications = async () => {
     try {
       const response = await axios.delete(
-        `${baseUrl}/notifications/clear-all`,
+        `${BASE_URL}/notifications/clear-all`,
         {
           headers: { Authorization: `Bearer ${token || localStorage.getItem("token")}` },
         }

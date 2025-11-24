@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const Post = () => {
   const [allPosts, setAllPosts] = useState([]);
   const [showPostBox, setShowPostBox] = useState(false);
@@ -25,7 +25,7 @@ const Post = () => {
   // ✅ Fetch all users
   const allusersFetch = async () => {
     try {
-      const res = await axios.get(`${baseUrl}/auth/alluser`);
+      const res = await axios.get(`${BASE_URL}/auth/alluser`);
       setUsers(res.data.users || []); // Expecting { users: [...] }
       console.log(res.data.users);
     } catch (error) {
@@ -38,7 +38,7 @@ const Post = () => {
     try { 
       const emailtofind=localStorage.getItem("email")
       console.log(emailtofind)
-      const res = await axios.get(`${baseUrl}/posts/getposts`);
+      const res = await axios.get(`${BASE_URL}/posts/getposts`);
       const p=res.data.posts.filter((post)=>post.email==emailtofind)
       setAllPosts(p);
     } catch (err) {
@@ -95,7 +95,7 @@ const Post = () => {
 
     try {
       setIsAdding(true);
-      await axios.post(`${baseUrl}/posts/addPost`, data, {
+      await axios.post(`${BASE_URL}/posts/addPost`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -118,7 +118,7 @@ const Post = () => {
   // ✅ Delete Post
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${baseUrl}/posts/delete/${id}`, {
+      await axios.delete(`${BASE_URL}/posts/delete/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       toast.success("Post deleted successfully!");
@@ -144,7 +144,7 @@ const Post = () => {
       }
 
       await axios.put(
-        `${baseUrl}/posts/like/${post._id}`,
+        `${BASE_URL}/posts/like/${post._id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -171,7 +171,7 @@ const Post = () => {
       const updatedComments = [...(post.comment || []), commentInput[post._id]];
 
       await axios.put(
-        `${baseUrl}/posts/comment/${post._id}`,
+        `${BASE_URL}/posts/comment/${post._id}`,
         { comment: updatedComments },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -199,7 +199,7 @@ const Post = () => {
       }
 
       await axios.delete(
-        `${baseUrl}/posts/comment/${post._id}/${commentIndex}`,
+        `${BASE_URL}/posts/comment/${post._id}/${commentIndex}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

@@ -9,7 +9,7 @@ import { AuthContext } from "../../Context/authContext";
 import { Users, UserCheck } from "lucide-react";
 
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const Post = () => {
   const { userDetails, token, isLogin } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Post = () => {
     if (!isLogin || !token) return;
     
     try {
-      const res = await axios.get(`${baseUrl}/auth/getuser`, {
+      const res = await axios.get(`${BASE_URL}/auth/getuser`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFollowingList(res.data.following || []);
@@ -58,7 +58,7 @@ const Post = () => {
   // ✅ Fetch all users
   const fetchAllUsers = async () => {
     try {
-      const res = await axios.get(`${baseUrl}/auth/alluser`);
+      const res = await axios.get(`${BASE_URL}/auth/alluser`);
       setUsers(res.data.users || []);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -68,7 +68,7 @@ const Post = () => {
   // ✅ Fetch all posts
   const fetchPosts = async () => {
     try {
-      const res = await axios.get(`${baseUrl}/posts/getposts`);
+      const res = await axios.get(`${BASE_URL}/posts/getposts`);
       setAllPosts(res.data.posts);
     } catch (err) {
       console.error(err);
@@ -103,7 +103,7 @@ const Post = () => {
       }
 
       await axios.put(
-        `${baseUrl}/posts/like/${post._id}`,
+        `${BASE_URL}/posts/like/${post._id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -130,7 +130,7 @@ const Post = () => {
       const updatedComments = [...(post.comment || []), commentInput[post._id]];
 
       await axios.put(
-        `${baseUrl}/posts/comment/${post._id}`,
+        `${BASE_URL}/posts/comment/${post._id}`,
         { comment: updatedComments },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -158,7 +158,7 @@ const Post = () => {
       }
 
       await axios.delete(
-        `${baseUrl}/posts/comment/${post._id}/${commentIndex}`,
+        `${BASE_URL}/posts/comment/${post._id}/${commentIndex}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

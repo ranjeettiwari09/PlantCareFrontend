@@ -3,7 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { Leaf, Users, ClipboardList, Phone } from "lucide-react";
 
-const baseUrl="https://plantcarebackend.onrender.com"
+import BASE_URL from "../../config/api";
 const Home = () => {
   const [user, setUser] = useState();
   const [token] = useState(localStorage.getItem("token"));
@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/auth/getuser/`, {
+        const res = await axios.get(`${BASE_URL}/auth/getuser/`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
